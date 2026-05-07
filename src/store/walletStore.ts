@@ -1,20 +1,27 @@
-import { create } from 'zustand';
-import type { Balance } from '@/types';
+import { create } from "zustand";
+import type { WalletState, WalletBalance } from "@/types/wallet";
 
-interface WalletStore {
-  publicKey: string | null;
-  connected: boolean;
-  balances: Balance[];
-  setWallet: (key: string) => void;
-  setBalances: (balances: Balance[]) => void;
-  disconnect: () => void;
+interface WalletStore extends WalletState {
+  setConnected: (publicKey: string) => void;
+  setBalances: (balances: WalletBalance[]) => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
+  reset: () => void;
 }
 
-export const useWalletStore = create<WalletStore>((set) => ({
+const initialState: WalletState = {
   publicKey: null,
-  connected: false,
   balances: [],
-  setWallet: (key) => set({ publicKey: key, connected: true }),
+  connected: false,
+  loading: false,
+  error: null,
+};
+
+export const useWalletStore = create<WalletStore>((set) => ({
+  ...initialState,
+  setConnected: (publicKey) => set({ publicKey, connected: true }),
   setBalances: (balances) => set({ balances }),
-  disconnect: () => set({ publicKey: null, connected: false, balances: [] }),
+  setLoading: (loading) => set({ loading }),
+  setError: (error) => set({ error }),
+  reset: () => set(initialState),
 }));
