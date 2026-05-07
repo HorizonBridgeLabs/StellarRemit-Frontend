@@ -1,3 +1,8 @@
+import { create } from "zustand";
+
+export type Transaction = Record<string, unknown>;
+
+export interface TransactionStoreState {
 import { create } from 'zustand';
 import type { Transaction } from '@/types';
 
