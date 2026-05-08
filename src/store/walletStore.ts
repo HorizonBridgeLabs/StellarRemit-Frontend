@@ -1,27 +1,79 @@
-import { create } from "zustand";
-import type { WalletState, WalletBalance } from "@/types/wallet";
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+import type { Balance } from '@/types';
 
-interface WalletStore extends WalletState {
-  setConnected: (publicKey: string) => void;
-  setBalances: (balances: WalletBalance[]) => void;
-  setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
-  reset: () => void;
+/**
+ * Wallet store state
+ */
+interface WalletStoreState {
+  publicKey: string | null;
+  connected: boolean;
+  balances: Balance[];
 }
 
-const initialState: WalletState = {
+/**
+ * Wallet store actions
+ */
+interface WalletStoreActions {
+  setWallet: (key: string) => void;
+  setBalances: (balances: Balance[]) => void;
+  disconnect: () => void;
+}
+
+/**
+ * Combined wallet store type
+ */
+type WalletStore = WalletStoreState & WalletStoreActions;
+
+/**
+ * Initial wallet state
+ */
+const initialState: WalletStoreState = {
   publicKey: null,
-  balances: [],
   connected: false,
-  loading: false,
-  error: null,
+  balances: [],
 };
 
-export const useWalletStore = create<WalletStore>((set) => ({
-  ...initialState,
-  setConnected: (publicKey) => set({ publicKey, connected: true }),
-  setBalances: (balances) => set({ balances }),
-  setLoading: (loading) => set({ loading }),
-  setError: (error) => set({ error }),
-  reset: () => set(initialState),
-}));
+/**
+ * Wallet store using Zustand
+ * Manages wallet connection state, public key, and asset balances
+ */
+export const useWalletStore = create<WalletStore>()(
+  devtools(
+    (set) => ({
+      // State
+      ...initialState,
+
+      // Actions
+      /**
+       * Connect wallet with a public key
+       */
+      setWallet: (key: string) =>
+        set((state) => ({
+          publicKey: key,
+          connected: true,
+        })),
+
+      /**
+       * Update wallet balances
+       */
+      setBalances: (balances: Balance[]) =>
+        set((state) => ({
+          balances,
+        })),
+
+      /**
+       * Disconnect wallet and reset state
+       */
+      disconnect: () =>
+        set(() => ({
+          publicKey: null,
+          connected: false,
+          balances: [],
+        })),
+    }),
+    {
+      name: 'WalletStore',
+    }
+  )
+);
