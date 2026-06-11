@@ -7,6 +7,7 @@ export interface ButtonProps {
   loading?: boolean;
   variant?: 'primary' | 'outline' | 'ghost';
   type?: 'button' | 'submit';
+  size?: 'sm' | 'md' | 'lg';
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
@@ -21,11 +22,18 @@ const variantClasses: Record<NonNullable<ButtonProps['variant']>, string> = {
     'text-gray-600 hover:bg-gray-100 focus:ring-gray-300',
 };
 
+const sizeClasses: Record<NonNullable<ButtonProps['size']>, string> = {
+  sm: 'px-3 py-2 text-xs',
+  md: 'px-4 py-2.5 text-sm',
+  lg: 'px-6 py-3 text-base',
+};
+
 export default function Button({
   children,
   loading = false,
   variant = 'primary',
   type = 'button',
+  size = 'md',
   onClick,
   disabled = false,
   className,
@@ -40,11 +48,12 @@ export default function Button({
       aria-disabled={isDisabled}
       className={clsx(
         'inline-flex items-center justify-center gap-2',
-        'px-4 py-2.5 rounded-lg text-sm font-medium',
+        'rounded-lg font-medium',
         'transition-all duration-150',
         'focus:outline-none focus:ring-2 focus:ring-offset-1',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         variantClasses[variant],
+        sizeClasses[size],
         className,
       )}
     >
