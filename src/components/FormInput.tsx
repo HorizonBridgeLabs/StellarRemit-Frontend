@@ -1,6 +1,6 @@
 'use client';
 
-import type { UseFormRegister, FieldValues } from 'react-hook-form';
+import type { UseFormRegister } from 'react-hook-form';
 
 export interface FormInputProps {
   label: string;
@@ -8,7 +8,8 @@ export interface FormInputProps {
   type?: string;
   placeholder?: string;
   error?: string;
-  register: UseFormRegister<FieldValues>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  register: UseFormRegister<any>;
 }
 
 export default function FormInput({

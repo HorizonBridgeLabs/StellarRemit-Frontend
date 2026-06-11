@@ -1,5 +1,6 @@
 'use client';
 
+import { useCallback } from 'react';
 import toast from 'react-hot-toast';
 import { useTransactionStore } from '@/store/transactionStore';
 import * as transactionService from '@/services/transactionService';
@@ -9,7 +10,7 @@ export function useTransactions() {
   const { transactions, loading, setTransactions, setLoading } =
     useTransactionStore();
 
-  async function fetchTransactions() {
+  const fetchTransactions = useCallback(async () => {
     setLoading(true);
     try {
       const data = await transactionService.getTransactions();
@@ -19,9 +20,9 @@ export function useTransactions() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [setLoading, setTransactions]);
 
-  async function sendMoney(payload: SendMoneyPayload) {
+  const sendMoney = useCallback(async (payload: SendMoneyPayload) => {
     setLoading(true);
     try {
       await transactionService.sendMoney(payload);
@@ -32,7 +33,7 @@ export function useTransactions() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [setLoading, fetchTransactions]);
 
   return { transactions, loading, fetchTransactions, sendMoney };
 }

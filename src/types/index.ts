@@ -37,8 +37,16 @@ export interface User {
 export interface Balance {
   /** Asset type (XLM, USDC, etc.) */
   asset: Asset;
+  /** Asset code string representation */
+  asset_code: string;
+  /** Asset type from Horizon */
+  asset_type: string;
+  /** Asset issuer (optional for non-native assets) */
+  asset_issuer?: string;
   /** Amount as a string to preserve precision */
   amount: string;
+  /** Balance string alias */
+  balance: string;
 }
 
 /**
@@ -137,10 +145,10 @@ export interface PaginatedResponse<T> {
 // Utility Types
 // ============================================================================
 
-/** Makes all properties of T optional */
-export type Partial<T> = {
+/** Makes all properties of T optional (alias for built-in) */
+export type Optional<T> = {
   [P in keyof T]?: T[P];
 };
 
-/** Extracts the type of a promise */
-export type Awaited<T> = T extends PromiseLike<infer U> ? U : T;
+/** Extracts the type of a promise (alias for built-in) */
+export type UnwrapPromise<T> = T extends PromiseLike<infer U> ? U : T;

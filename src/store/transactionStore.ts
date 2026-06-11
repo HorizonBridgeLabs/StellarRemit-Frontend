@@ -1,9 +1,5 @@
-import { create } from "zustand";
-
-export type Transaction = Record<string, unknown>;
-
-export interface TransactionStoreState {
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import type { Transaction } from '@/types';
 
 interface TransactionStore {
@@ -13,9 +9,14 @@ interface TransactionStore {
   setLoading: (v: boolean) => void;
 }
 
-export const useTransactionStore = create<TransactionStore>((set) => ({
-  transactions: [],
-  loading: false,
-  setTransactions: (transactions) => set({ transactions }),
-  setLoading: (loading) => set({ loading }),
-}));
+export const useTransactionStore = create<TransactionStore>()(
+  devtools(
+    (set) => ({
+      transactions: [],
+      loading: false,
+      setTransactions: (transactions) => set({ transactions }),
+      setLoading: (loading) => set({ loading }),
+    }),
+    { name: 'TransactionStore' }
+  )
+);

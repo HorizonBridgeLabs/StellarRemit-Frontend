@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useWalletStore } from '@/store/walletStore';
+import { useWallet } from '@/hooks/useWallet';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -13,7 +13,7 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { publicKey, connected, disconnect } = useWalletStore();
+  const { publicKey, connected, loading, connect, disconnect } = useWallet();
 
   const truncated = publicKey
     ? `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`
@@ -53,10 +53,12 @@ export default function Navbar() {
             </button>
           ) : (
             <button
-              className="text-sm px-4 py-2 rounded-lg bg-brand text-white hover:opacity-90 transition-opacity"
+              onClick={connect}
+              disabled={loading}
+              className="text-sm px-4 py-2 rounded-lg bg-brand text-white hover:opacity-90 transition-opacity disabled:opacity-50"
               aria-label="Connect wallet"
             >
-              Connect Wallet
+              {loading ? 'Connecting...' : 'Connect Wallet'}
             </button>
           )}
         </div>
@@ -99,8 +101,12 @@ export default function Navbar() {
                 {truncated} · Disconnect
               </button>
             ) : (
-              <button className="w-full text-sm px-4 py-2 rounded-lg bg-brand text-white hover:opacity-90">
-                Connect Wallet
+              <button
+                onClick={() => { connect(); setMenuOpen(false); }}
+                disabled={loading}
+                className="w-full text-sm px-4 py-2 rounded-lg bg-brand text-white hover:opacity-90 disabled:opacity-50"
+              >
+                {loading ? 'Connecting...' : 'Connect Wallet'}
               </button>
             )}
           </div>
