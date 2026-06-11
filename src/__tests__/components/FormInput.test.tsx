@@ -11,7 +11,7 @@ function TestForm(props: { error?: string }) {
         name="email"
         placeholder="Enter email"
         error={props.error}
-        register={register as any}
+        register={register}
       />
     </form>
   );
