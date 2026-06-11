@@ -6,6 +6,8 @@ import { useTransactions } from '@/hooks/useTransactions';
 import Card from '@/components/Card';
 import Table from '@/components/Table';
 import Button from '@/components/Button';
+import WalletConnectButton from '@/components/WalletConnectButton';
+import BalanceCard from '@/components/BalanceCard';
 import type { Transaction } from '@/types';
 
 export default function DashboardPage() {
@@ -41,7 +43,7 @@ export default function DashboardPage() {
           <Card className="mb-6">
             <div className="flex items-center justify-between">
               <p className="text-gray-700">Connect your wallet to view your balance and transactions.</p>
-              <Button onClick={connect} loading={walletLoading}>Connect Wallet</Button>
+              <WalletConnectButton />
             </div>
           </Card>
         )}
@@ -60,14 +62,11 @@ export default function DashboardPage() {
 
           <Card title="Balance">
             {balances.length > 0 ? (
-              <ul className="space-y-2">
+              <div className="space-y-3">
                 {balances.map((b, i) => (
-                  <li key={i} className="flex justify-between text-sm">
-                    <span className="text-gray-600">{b.asset_code}</span>
-                    <span className="font-medium text-gray-900">{b.balance}</span>
-                  </li>
+                  <BalanceCard key={i} balance={b} />
                 ))}
-              </ul>
+              </div>
             ) : (
               <p className="text-gray-500">{connected ? 'No balances found' : 'Connect wallet to view'}</p>
             )}
