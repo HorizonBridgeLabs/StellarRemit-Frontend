@@ -12,7 +12,8 @@ const HORIZON_URLS: Record<string, string> = {
   TESTNET: "https://horizon-testnet.stellar.org",
 };
 
-import type { Balance, Asset } from '@/types';
+import type { Balance } from '@/types';
+import { Asset } from '@/types';
 
 function getHorizonServer(): Horizon.Server {
   const url = HORIZON_URLS[NETWORK.toUpperCase()];

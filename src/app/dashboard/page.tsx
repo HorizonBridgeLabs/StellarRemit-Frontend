@@ -16,6 +16,7 @@ export default function DashboardPage() {
     if (connected) {
       fetchTransactions();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected]);
 
   const columns = [
