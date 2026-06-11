@@ -1,6 +1,6 @@
 'use client';
 
-import type { UseFormRegister, FieldValues } from 'react-hook-form';
+import type { UseFormRegister } from 'react-hook-form';
 
 export interface FormInputProps {
   label: string;
