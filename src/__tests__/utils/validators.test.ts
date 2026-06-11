@@ -1,5 +1,4 @@
 import { isValidStellarPublicKey, isValidAmount, isSupportedAsset, isValidEmail } from '@/utils/validators';
-import { Asset } from '@/types';
 
 describe('isValidStellarPublicKey', () => {
   it('returns true for a valid 56-char G-key', () => {
