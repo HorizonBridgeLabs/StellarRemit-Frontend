@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Button from '@/components/Button';
 
 export default function Home() {
   return (
@@ -14,11 +13,17 @@ export default function Home() {
             StellarRemit is a fast, secure, and low-cost cross-border payment platform built on the Stellar network.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/dashboard">
-              <Button size="lg">Get Started</Button>
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-lg bg-brand text-white hover:opacity-90 transition-opacity"
+            >
+              Get Started
             </Link>
-            <Link href="/send">
-              <Button variant="outline" size="lg">Send Money</Button>
+            <Link
+              href="/send"
+              className="inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-lg border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+            >
+              Send Money
             </Link>
           </div>
         </div>
@@ -67,8 +72,11 @@ export default function Home() {
           <p className="text-gray-600 mb-8">
             Connect your Stellar wallet and start sending money to anyone, anywhere in the world.
           </p>
-          <Link href="/dashboard">
-            <Button size="lg">Go to Dashboard</Button>
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-lg bg-brand text-white hover:opacity-90 transition-opacity"
+          >
+            Go to Dashboard
           </Link>
         </div>
       </section>

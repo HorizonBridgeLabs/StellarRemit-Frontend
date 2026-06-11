@@ -5,13 +5,12 @@ import { useWallet } from '@/hooks/useWallet';
 import { useTransactions } from '@/hooks/useTransactions';
 import Card from '@/components/Card';
 import Table from '@/components/Table';
-import Button from '@/components/Button';
 import WalletConnectButton from '@/components/WalletConnectButton';
 import BalanceCard from '@/components/BalanceCard';
 import type { Transaction } from '@/types';
 
 export default function DashboardPage() {
-  const { publicKey, balances, connected, loading: walletLoading, error: walletError, connect } = useWallet();
+  const { publicKey, balances, connected, error: walletError } = useWallet();
   const { transactions, loading: txLoading, fetchTransactions } = useTransactions();
 
   useEffect(() => {
