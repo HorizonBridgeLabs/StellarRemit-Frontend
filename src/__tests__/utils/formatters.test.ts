@@ -2,8 +2,8 @@ import { truncateKey, formatCurrency, formatDate, capitalize } from '@/utils/for
 
 describe('truncateKey', () => {
   it('truncates a long key correctly', () => {
-    const key = 'GABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABC';
-    expect(truncateKey(key)).toBe('GABC...YZABC');
+    const key = 'G' + 'A'.repeat(55);
+    expect(truncateKey(key)).toBe('GAAA...AAAA');
   });
 
   it('returns short keys unchanged', () => {
