@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { clsx } from 'clsx';
 
 interface AvatarProps {
@@ -13,6 +14,12 @@ const sizeClasses = {
   lg: 'h-14 w-14 text-base',
 };
 
+const sizePixels = {
+  sm: 32,
+  md: 40,
+  lg: 56,
+};
+
 export default function Avatar({ name, src, size = 'md', className }: AvatarProps) {
   const initials = name
     .split(' ')
@@ -23,10 +30,13 @@ export default function Avatar({ name, src, size = 'md', className }: AvatarProp
 
   if (src) {
     return (
-      <img
+      <Image
         src={src}
         alt={name}
+        width={sizePixels[size]}
+        height={sizePixels[size]}
         className={clsx('rounded-full object-cover', sizeClasses[size], className)}
+        unoptimized
       />
     );
   }
