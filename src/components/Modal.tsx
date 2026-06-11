@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { clsx } from 'clsx';
-import Button from './Button';
 
 interface ModalProps {
   open: boolean;
