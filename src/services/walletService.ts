@@ -12,12 +12,7 @@ const HORIZON_URLS: Record<string, string> = {
   TESTNET: "https://horizon-testnet.stellar.org",
 };
 
-export interface Balance {
-  asset_code: string;
-  asset_type: string;
-  asset_issuer?: string;
-  balance: string;
-}
+import type { Balance, Asset } from '@/types';
 
 function getHorizonServer(): Horizon.Server {
   const url = HORIZON_URLS[NETWORK.toUpperCase()];
@@ -127,18 +122,23 @@ export async function getWalletBalance(publicKey: string): Promise<Balance[]> {
     .map((b: Horizon.HorizonApi.BalanceLine): Balance => {
       if (b.asset_type === "native") {
         return {
+          asset: Asset.XLM,
           asset_type: "native",
           asset_code: "XLM",
           balance: b.balance,
+          amount: b.balance,
         };
       }
 
       const asset = b as Horizon.HorizonApi.BalanceLineAsset;
+      const code = asset.asset_code as Asset;
       return {
+        asset: SUPPORTED_ASSETS.has(code) ? code : Asset.XLM,
         asset_type: asset.asset_type,
         asset_code: asset.asset_code,
         asset_issuer: asset.asset_issuer,
         balance: asset.balance,
+        amount: asset.balance,
       };
     });
 

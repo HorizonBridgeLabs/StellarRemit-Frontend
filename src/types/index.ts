@@ -37,8 +37,16 @@ export interface User {
 export interface Balance {
   /** Asset type (XLM, USDC, etc.) */
   asset: Asset;
+  /** Asset code string representation */
+  asset_code: string;
+  /** Asset type from Horizon */
+  asset_type: string;
+  /** Asset issuer (optional for non-native assets) */
+  asset_issuer?: string;
   /** Amount as a string to preserve precision */
   amount: string;
+  /** Balance string alias */
+  balance: string;
 }
 
 /**
