@@ -1,10 +1,8 @@
-import { renderHook, act, waitFor } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { useClipboard } from '@/hooks/useClipboard';
 
 describe('useClipboard', () => {
   const mockWriteText = jest.fn();
-  const originalClipboard = Object.getOwnPropertyDescriptor(window, 'navigator');
-
   beforeEach(() => {
     Object.defineProperty(window, 'navigator', {
       writable: true,
