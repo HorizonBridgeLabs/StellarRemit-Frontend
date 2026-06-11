@@ -11,7 +11,7 @@ export default function ErrorBoundary({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error(error);
+    // Log error for debugging
   }, [error]);
 
   return (
