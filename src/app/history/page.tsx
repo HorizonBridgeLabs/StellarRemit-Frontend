@@ -16,8 +16,7 @@ export default function HistoryPage() {
     if (connected) {
       fetchTransactions();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected]);
+  }, [connected, fetchTransactions]);
 
   const columns = [
     { key: 'id' as keyof Transaction, label: 'ID' },

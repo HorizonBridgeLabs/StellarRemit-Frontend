@@ -9,15 +9,14 @@ import Button from '@/components/Button';
 import type { Transaction } from '@/types';
 
 export default function DashboardPage() {
-  const { publicKey, balances, connected, loading: walletLoading, connect } = useWallet();
+  const { publicKey, balances, connected, loading: walletLoading, error: walletError, connect } = useWallet();
   const { transactions, loading: txLoading, fetchTransactions } = useTransactions();
 
   useEffect(() => {
     if (connected) {
       fetchTransactions();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected]);
+  }, [connected, fetchTransactions]);
 
   const columns = [
     { key: 'id' as keyof Transaction, label: 'ID' },
@@ -31,6 +30,12 @@ export default function DashboardPage() {
     <main className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-6">Dashboard</h1>
+
+        {walletError && (
+          <Card className="mb-6 border-red-200">
+            <p className="text-sm text-red-600">{walletError}</p>
+          </Card>
+        )}
 
         {!connected && (
           <Card className="mb-6">

@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import toast from 'react-hot-toast';
+// toast is handled by the useTransactions hook
 import { useWallet } from '@/hooks/useWallet';
 import { useTransactions } from '@/hooks/useTransactions';
 import { Asset } from '@/types';
@@ -68,7 +68,7 @@ export default function SendPage() {
               name="recipient"
               placeholder="G..."
               error={errors.recipient?.message}
-              register={register as any}
+              register={register}
             />
 
             <FormInput
@@ -77,7 +77,7 @@ export default function SendPage() {
               type="number"
               placeholder="0.00"
               error={errors.amount?.message}
-              register={register as any}
+              register={register}
             />
 
             <div className="flex flex-col gap-1.5">

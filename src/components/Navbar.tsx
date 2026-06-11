@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useWalletStore } from '@/store/walletStore';
 import { useWallet } from '@/hooks/useWallet';
 
 const NAV_LINKS = [
@@ -14,8 +13,7 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { publicKey, connected, disconnect } = useWalletStore();
-  const { connect, loading } = useWallet();
+  const { publicKey, connected, loading, connect, disconnect } = useWallet();
 
   const truncated = publicKey
     ? `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`
