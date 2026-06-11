@@ -31,6 +31,17 @@ describe('useMediaQuery', () => {
 });
 
 describe('responsive helpers', () => {
+  beforeEach(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: jest.fn().mockImplementation(() => ({
+        matches: false,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+      })),
+    });
+  });
+
   it('useIsMobile returns boolean', () => {
     const { result } = renderHook(() => useIsMobile());
     expect(typeof result.current).toBe('boolean');
