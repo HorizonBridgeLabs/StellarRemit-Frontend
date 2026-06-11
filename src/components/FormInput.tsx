@@ -8,7 +8,8 @@ export interface FormInputProps {
   type?: string;
   placeholder?: string;
   error?: string;
-  register: UseFormRegister<FieldValues>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  register: UseFormRegister<any>;
 }
 
 export default function FormInput({
