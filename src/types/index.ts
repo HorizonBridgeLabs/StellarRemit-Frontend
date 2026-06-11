@@ -145,10 +145,10 @@ export interface PaginatedResponse<T> {
 // Utility Types
 // ============================================================================
 
-/** Makes all properties of T optional */
-export type Partial<T> = {
+/** Makes all properties of T optional (alias for built-in) */
+export type Optional<T> = {
   [P in keyof T]?: T[P];
 };
 
-/** Extracts the type of a promise */
-export type Awaited<T> = T extends PromiseLike<infer U> ? U : T;
+/** Extracts the type of a promise (alias for built-in) */
+export type UnwrapPromise<T> = T extends PromiseLike<infer U> ? U : T;
