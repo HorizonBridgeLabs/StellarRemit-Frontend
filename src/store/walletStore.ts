@@ -9,6 +9,8 @@ interface WalletStoreState {
   publicKey: string | null;
   connected: boolean;
   balances: Balance[];
+  loading: boolean;
+  error: string | null;
 }
 
 /**
@@ -16,8 +18,12 @@ interface WalletStoreState {
  */
 interface WalletStoreActions {
   setWallet: (key: string) => void;
+  setConnected: (key: string) => void;
   setBalances: (balances: Balance[]) => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
   disconnect: () => void;
+  reset: () => void;
 }
 
 /**
@@ -32,6 +38,8 @@ const initialState: WalletStoreState = {
   publicKey: null,
   connected: false,
   balances: [],
+  loading: false,
+  error: null,
 };
 
 /**
@@ -46,20 +54,46 @@ export const useWalletStore = create<WalletStore>()(
 
       // Actions
       /**
-       * Connect wallet with a public key
+       * Connect wallet with a public key (legacy alias)
        */
       setWallet: (key: string) =>
-        set((state) => ({
+        set(() => ({
           publicKey: key,
           connected: true,
+        })),
+
+      /**
+       * Connect wallet with a public key
+       */
+      setConnected: (key: string) =>
+        set(() => ({
+          publicKey: key,
+          connected: true,
+          error: null,
         })),
 
       /**
        * Update wallet balances
        */
       setBalances: (balances: Balance[]) =>
-        set((state) => ({
+        set(() => ({
           balances,
+        })),
+
+      /**
+       * Set loading state
+       */
+      setLoading: (loading: boolean) =>
+        set(() => ({
+          loading,
+        })),
+
+      /**
+       * Set error state
+       */
+      setError: (error: string | null) =>
+        set(() => ({
+          error,
         })),
 
       /**
@@ -70,7 +104,15 @@ export const useWalletStore = create<WalletStore>()(
           publicKey: null,
           connected: false,
           balances: [],
+          loading: false,
+          error: null,
         })),
+
+      /**
+       * Reset wallet state to initial
+       */
+      reset: () =>
+        set(() => initialState),
     }),
     {
       name: 'WalletStore',
